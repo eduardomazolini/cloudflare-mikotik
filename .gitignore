@@ -1,0 +1,6 @@
+.vscode/
+*_key
+*_key.pub
+*_key-cert.pub
+ca.pub
+*.tar
