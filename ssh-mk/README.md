@@ -163,7 +163,7 @@ useradd -m -d /home/guest -s /bin/bash guest
 
 # [Name Service Switch module All-To-One (libnss-ato)](https://github.com/donapieppo/libnss-ato)
 
-Essa foi a grande descoberta que nem as inteligencias artificiais conseguiram me dar a dica, penei muito para achar.
+Essa foi a grande descoberta que nem as inteligências artificiais conseguiram me dar a dica, penei muito para achar.
 Quero agradecer muito ao desenvolvedor [Donapieppo](https://github.com/donapieppo) por ter feito essa lib.
 
 Por favor, vão até o github e marquem o repositório com ⭐
