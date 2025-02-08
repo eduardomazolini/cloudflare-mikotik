@@ -8,7 +8,9 @@ Aqui vamos criar 2 containers para usar na cloudflare
 
 # SSH Server
 
-## Tipo de chaves e certificados
+## Dicas
+
+### Tipo de chaves e certificados
 
 Cloudflare usa chave curta assinada do tipo ecdsa-sha2-nistp256 se precisar criar uma igual para testar se o servidor esta funcionando use o comando a baixo.
 
@@ -34,9 +36,29 @@ ssh -i user_key -o CertificateFile=user_key-cert.pub user@servidor
 
 ```
 
+### Fingerprint
+
+No log só aparece o fingeprint do certificado que foi usado, para comparar use o comando a baixo para poder ver o do seu certificado.
+
+```
+ssh-keygen -lf /etc/ssh/ca.pub
+```
 Objetivo é acessar SSH através da Cloudflare.
 
-### Gerar a chave SSH
+## Montando o Servidor
+
+### Configurar as chaves privadas do Servidor
+
+```
+ssh-keygen -A
+```
+
+```
+mkdir -p /run/sshd
+```
+Algumas vez precisei criar o diretório utras não.
+
+### Gerar a chave SSH CA
 
 Eu acho que é desnecessário re-escrever essa explicação veja o link
 [Generate a Cloudflare SSH CA](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#generate-a-cloudflare-ssh-ca)
@@ -65,11 +87,41 @@ TrustedUserCAKeys /etc/ssh/ca.pub
 ```
 2) Reiniciar o servidor SSH
 
+### Principals
 
-### Fingerprint
-
-No log só aparece o fingeprint do certificado que foi usado, para comparar use o comando a baixo para poder ver o do seu certificado.
+Os certificados tem um informação que é cruzada com o usuário.
+Assim o certificado do "joão" não acessa o usuário da "maria".
+Mas o certificado pode ser do "Dep de Suporte" e eles podem acessar o "root".
+Neste caso que o principals não é o usuário é preciso faze uma configuração no servidor.
 
 ```
-ssh-keygen -lf /etc/ssh/ca.pub
+AuthorizedPrincipalsFile /etc/ssh/auth_principals/%u
+```
+
+```
+AuthorizedPrincipalsCommandUser root
+AuthorizedPrincipalsCommand /opt/local/bin/authorized-principals.sh %i
+```
+Lembre de caso for fazer o script iniciar ele com:
+```
+#!/bin/sh
+```
+
+### NSS ATO
+```
+wget -O libnss-ato.zip https://github.com/donapieppo/libnss-ato/archive/refs/heads/master.zip
+
+unzip libnss-ato.zip
+cd libnss-ato-master
+
+apt install make gcc
+
+```
+
+```
+cat << EOF > /etc/nsswitch.conf
+passwd:         files ato
+group:          files
+shadow:         files ato
+EOF
 ```

@@ -24,6 +24,17 @@ docker login
 
 ```
 
+### Build exemplo
+
+```
+docker buildx build  --no-cache --platform arm --output=type=docker -t eduardomazolini/test-arm-mikrotik .
+
+docker save eduardomazolini/test-arm-mikrotik > test-arm-mikrotik.tar
+
+docker push eduardomazolini/test-arm-mikrotik:latest
+```
+
+
 ## Configurações do Mikrotik
 
 ### Instalar o pacote opcional container
