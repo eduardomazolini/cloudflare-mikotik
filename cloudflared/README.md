@@ -1,6 +1,6 @@
 # Clodflared Tunnel
 
-Esse projeto tem como objetivo criar container compatível com mikrotik ARM (arm32).
+Esse projeto tem como objetivo criar container compatível com MikroTik ARM (arm32).
 
 ## Alpine
 

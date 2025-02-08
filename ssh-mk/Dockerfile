@@ -11,6 +11,7 @@ RUN apk --no-cache add openssh && \
 
 # Gerar as chaves de host SSH
 RUN ssh-keygen -A
+RUN mkdir -p /run/sshd
 
 # Adicionar usuário para SSH (substitua USERNAME pelo nome desejado)
 RUN adduser -D -s /bin/sh user && \
@@ -21,6 +22,11 @@ RUN adduser -D -s /bin/sh user && \
 COPY your-public-key.pub /home/user/.ssh/authorized_keys
 RUN chown user:user /home/user/.ssh/authorized_keys && \
     chmod 600 /home/user/.ssh/authorized_keys
+
+# Copiar chave CA pública para o container (ajuste conforme necessário)
+COPY ca.pub /etc/ssh/ca.pub
+RUN chmod 600 /etc/ssh/ca.pub
+
 
 # Configurar portas e iniciar o servidor SSH
 EXPOSE 22

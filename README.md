@@ -96,6 +96,15 @@ add chain=srcnat action=masquerade src-address=192.168.10.0/30
 
 ## Container dicas e truques
 
+### Container de Test
+
+Alpine é uma imagem bem leve que pode ser usada para testes.
+
+```
+/container
+add remote-image=alpine interface=veth1 cmd="/dev/null" entrypoint="tail -f"
+```
+
 ### Variáveis de ambiente
 
 O modo mais elegante de configurar um bom container.
@@ -177,7 +186,7 @@ set 0 set 0 cmd="/dev/null" entrypoint="tail -f"
 
 ### Log
 
-Ao rodarmos um serviço os logs gerados podem ser visos no mikrotik usando parâmetro logging.
+Ao rodarmos um serviço os logs gerados podem ser visos no MikroTik usando parâmetro logging.
 
 ```
 /container
@@ -194,23 +203,13 @@ add action=echo topics=container
 **Atenção:** No caso de ```echo``` se tiver muitas mensagens elas podem ser ocultadas no terminal exibindo ```(X messages discarded)``` então confira o log de outra forma.
 
 ### Inicia ao reiniciar a RB
-Ao rodarmos um serviço na inicialização para que ele volte a subir depois de religar o mikrotik use o parâmetro start-on-boot.
+Ao rodarmos um serviço na inicialização para que ele volte a subir depois de religar o MikroTik use o parâmetro start-on-boot.
 
 ```
 /container
 print
 set 0 set 0 start-on-boot=yes
 ```
-
-### Container de Test
-
-Alpine é uma imagem bem leve que pode ser usada para testes.
-
-```
-/container
-add remote-image=alpine interface=veth1 cmd="/dev/null" entrypoint="tail -f"
-```
-
 
 ## [Cloudflare Tunnel][cf_tunel_readme]
 

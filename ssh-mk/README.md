@@ -23,7 +23,6 @@ ssh-keygen -s ca_key -I user -n user -V +52w user_key.pub
 ```
 ```
 ssh -i user_key -o CertificateFile=user_key-cert.pub user@servidor
-
 ```
 Usuário joao
 ```
@@ -31,7 +30,7 @@ ssh-keygen -t ecdsa -b 256 -f joao_key
 ssh-keygen -s ca_key -I joao -n joao -V +52w joao_key.pub
 ```
 ```
-ssh -i usuario_key -o CertificateFile=usuario_key-cert.pub user@servidor
+ssh -i user_key -o CertificateFile=user_key-cert.pub user@servidor
 
 ```
 
